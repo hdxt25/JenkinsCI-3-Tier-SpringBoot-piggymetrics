@@ -1,4 +1,4 @@
-FROM java:8-jre
+FROM gcr.io/distroless/java17-debian12
 MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
 
 ADD ./target/statistics-service.jar /app/
