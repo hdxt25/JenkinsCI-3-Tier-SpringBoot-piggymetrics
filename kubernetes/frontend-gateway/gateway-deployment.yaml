@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: hdxt25/piggymetrics-gateway:0
+        image: hdxt25/piggymetrics-gateway:1
         env:
         - name: CONFIG_SERVICE_PASSWORD
           valueFrom:
