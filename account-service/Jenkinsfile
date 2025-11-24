@@ -21,9 +21,8 @@ pipeline {
         stage("Workspace cleanup"){
             steps{
                 script{
-                    dir('account-service'){
                         cleanWs()
-                    }
+                    
                 }
             }
         }
@@ -31,9 +30,8 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
-                    dir('account-service'){
                         code_checkout("https://github.com/hdxt25/JenkinsCI-3-Tier-SpringBoot-piggymetrics.git","main","GITHUB_CRED")
-                    }
+                    
                 }
             }
         }
