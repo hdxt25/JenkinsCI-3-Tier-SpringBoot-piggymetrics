@@ -33,4 +33,4 @@ spec:
               name: piggymetrics-secrets
               key: MONGODB_PASSWORD
         ports:
-        - containerPort: 8080
+        - containerPort: 6000
