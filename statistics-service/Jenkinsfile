@@ -38,7 +38,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('gateway'){
+                dir('statistics-service'){
                     sh 'mvn clean verify -DskipTests=true '  
                 }
             }
@@ -47,7 +47,7 @@ pipeline {
         // stage('Trivy File Scan') {
         //     steps {
         //         script{
-        //             dir('gateway'){
+        //             dir('statistics-service'){
         //                 trivy_scan()
         //             }
         //         }                
@@ -57,7 +57,7 @@ pipeline {
         // stage('OWASP Dependency-Check Scan') {
         //     steps {
         //         script{
-        //             dir('gateway'){
+        //             dir('statistics-service'){
         //                 owasp_dependency()
         //             }
         //         }               
@@ -67,8 +67,8 @@ pipeline {
         // stage('SonarQube: Code Analysis') {
         //     steps {
         //         script {
-        //             dir('gateway'){
-        //                 mvn_sonarqube_analysis('sonar-server', 'piggymetrics-gateway', 'piggymetrics-gateway')
+        //             dir('statistics-service'){
+        //                 mvn_sonarqube_analysis('sonar-server', 'piggymetrics-statistics-service', 'piggymetrics-statistics-service')
         //             }
         //         }
         //     }
@@ -88,8 +88,8 @@ pipeline {
         stage("Docker Image multiarch build & push") {
             steps {
                 script {
-                    dir('gateway'){
-                        docker_multiarch_build("piggymetrics-gateway","${env.BUILD_NUMBER}","hdxt25")
+                    dir('statistics-service'){
+                        docker_multiarch_build("piggymetrics-statistics-service","${env.BUILD_NUMBER}","hdxt25")
                     }
                 }
             }
@@ -98,8 +98,8 @@ pipeline {
         // stage("TRIVY Image Scan") {
         //     steps {
         //         script {
-        //             dir('gateway'){
-        //                 trivy_multiarch_image_scan("piggymetrics-gateway","${env.BUILD_NUMBER}","hdxt25") 
+        //             dir('statistics-service'){
+        //                 trivy_multiarch_image_scan("piggymetrics-statistics-service","${env.BUILD_NUMBER}","hdxt25") 
         //             }                  
         //         }
         //     }
@@ -108,12 +108,12 @@ pipeline {
         stage("Update: Kubernetes manifest"){
             steps{
                 script{
-                    dir('kubernetes/frontend-gateway'){
+                    dir('kubernetes/backend'){
                         sh """
                             echo "Current BUILD_NUMBER: ${BUILD_NUMBER}"
-                            sed -i "s|hdxt25/piggymetrics-gateway:.*|hdxt25/piggymetrics-gateway:${BUILD_NUMBER}|g" gateway-deployment.yaml
+                            sed -i "s|hdxt25/piggymetrics-statistics-service:.*|hdxt25/piggymetrics-statistics-service:${BUILD_NUMBER}|g" statistics-service-deployment.yaml
                             echo "Updated image in manifest:"
-                            grep -A 1 "image:" gateway-deployment.yaml              
+                            grep -A 1 "image:" statistics-service-deployment.yaml              
                         """
                     }
                 }
@@ -123,7 +123,7 @@ pipeline {
         stage("Git: Code update and push to GitHub"){
             steps{
                 script{
-                    dir('kubernetes/frontend-gateway'){
+                    dir('kubernetes/backend'){
                         withCredentials([usernamePassword(
                                 credentialsId: 'GITHUB_CRED', 
                                 usernameVariable: 'GITHUB_USER_NAME', 
@@ -134,7 +134,7 @@ pipeline {
                         
                     
                                 echo "Adding changes to git: "
-                                git add gateway-deployment.yaml
+                                git add statistics-service-deployment.yaml
                         
                                 echo "Commiting changes: "
                                 git commit -m "Updated K8s Deployment Docker Image Version ${BUILD_NUMBER}" || echo "No changes to commit"
