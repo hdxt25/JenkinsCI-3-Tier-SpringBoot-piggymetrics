@@ -124,7 +124,7 @@ pipeline {
         stage("Git: Code update and push to GitHub"){
             steps{
                 script{
-                    dir('kubernetes/backend'){
+                    dir('kubernetes/database'){
                         withCredentials([usernamePassword(
                                 credentialsId: 'GITHUB_CRED', 
                                 usernameVariable: 'GITHUB_USER_NAME', 
