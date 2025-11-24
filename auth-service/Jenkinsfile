@@ -14,7 +14,7 @@ pipeline {
         AWS_DEFAULT_REGION = 'us-east-2'
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
         IMAGE_URI = "${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}"
-        GIT_REPO_NAME = "JenkinsCI-2-Tier-SpringBoot-bankapp"
+        GIT_REPO_NAME = "JenkinsCI-3-Tier-SpringBoot-piggymetrics"
     }
 
     stages {
@@ -75,53 +75,21 @@ pipeline {
         // }
         
 
-        // stage("Docker Image Build") {
-        //     steps {
-        //         script {
-        //                 docker_build("bankapp","${env.BUILD_NUMBER}","hdxt25")            
-        //         }
-        //     }
-        // }
-
-        // stage("Docker Image Push") {
-        //     steps {
-        //         script {
-        //                 docker_push("bankapp","${env.BUILD_NUMBER}","hdxt25")
-        //         }
-        //     }
-        // }
-
-        // stage("TRIVY Image Scan") {
-        //     steps {
-        //         script {
-        //                 trivy_image_scan("bankapp","${env.BUILD_NUMBER}","hdxt25")                   
-        //         }
-        //     }
-        // }
-
-        stage("Ecr Image Build") {
+        stage("Docker Image multiarch build & push") {
             steps {
                 script {
-                        ecr_image_build(AWS_ECR_REPO_NAME)
-                }
-            }          
-        }
-
-        stage("Ecr Image Push") {
-            steps {
-                script {
-                        ecr_image_push(AWS_ECR_REPO_NAME, AWS_DEFAULT_REGION, REPOSITORY_URI)                  
+                        docker_multiarch_build("devopsclasscodes","${env.BUILD_NUMBER}","hdxt25")
                 }
             }
         }
 
-        stage("TRIVY Docker Image Scan") {
+        stage("TRIVY Image Scan") {
             steps {
                 script {
-                    trivy_ecr_image_scan(IMAGE_URI)
+                        trivy_multiarch_image_scan("devopsclasscodes","${env.BUILD_NUMBER}","hdxt25")                   
                 }
             }
-        }    
+        } 
 
         stage("Update: Kubernetes manifest"){
             steps{

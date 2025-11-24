@@ -1,0 +1,125 @@
+# Namespace
+# ----------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: piggymetrics
+---
+# ----------------------------
+# Secrets (placeholders - replace values)
+# ----------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: piggymetrics-secrets
+  namespace: piggymetrics
+type: Opaque
+stringData:
+  CONFIG_SERVICE_PASSWORD: password
+  NOTIFICATION_SERVICE_PASSWORD: password
+  STATISTICS_SERVICE_PASSWORD: password
+  ACCOUNT_SERVICE_PASSWORD: password
+  MONGODB_PASSWORD: password
+---
+# ----------------------------
+# PersistentVolumes (one per MongoDB)
+# Note: PVs are cluster-scoped (no namespace). Update hostPath as needed for your environment.
+# ----------------------------
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-auth-mongodb
+spec:
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/auth-mongodb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-account-mongodb
+spec:
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/account-mongodb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-statistics-mongodb
+spec:
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/statistics-mongodb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-notification-mongodb
+spec:
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/notification-mongodb
+---
+# ----------------------------
+# PersistentVolumeClaims (namespace: piggymetrics)
+# ----------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-auth-mongodb
+  namespace: piggymetrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-account-mongodb
+  namespace: piggymetrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-statistics-mongodb
+  namespace: piggymetrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-notification-mongodb
+  namespace: piggymetrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
