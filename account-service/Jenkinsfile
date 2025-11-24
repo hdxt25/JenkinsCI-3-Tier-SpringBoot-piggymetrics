@@ -91,6 +91,7 @@ pipeline {
             steps {
                 script {
                     dir('account-service'){
+                        sh 'ls -la'
                         docker_multiarch_build("piggymetrics-account-service","${env.BUILD_NUMBER}","hdxt25")
                     }
                 }
