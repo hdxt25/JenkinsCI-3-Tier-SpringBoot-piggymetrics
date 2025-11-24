@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: monitoring
-        image: hdxt25/piggymetrics-monitoring:0
+        image: hdxt25/piggymetrics-monitoring:1
         env:
         - name: CONFIG_SERVICE_PASSWORD
           valueFrom:
