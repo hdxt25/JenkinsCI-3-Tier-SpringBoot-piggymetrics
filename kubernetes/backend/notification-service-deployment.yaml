@@ -33,4 +33,4 @@ spec:
               name: piggymetrics-secrets
               key: NOTIFICATION_SERVICE_PASSWORD
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
