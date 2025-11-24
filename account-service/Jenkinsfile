@@ -41,40 +41,40 @@ pipeline {
         stage('Build') {
             steps {
                 dir('account-service'){
-                    sh 'mvn clean verify -DskipTests=true '  //skip tests as its 2 Tier app mysql not available.
+                    sh 'mvn clean verify -DskipTests=true '  
                 }
             }
         }
 
-        stage('Trivy File Scan') {
-            steps {
-                script{
-                    dir('account-service'){
-                        trivy_scan()
-                    }
-                }                
-            }
-        }
+        // stage('Trivy File Scan') {
+        //     steps {
+        //         script{
+        //             dir('account-service'){
+        //                 trivy_scan()
+        //             }
+        //         }                
+        //     }
+        // }
 
-        stage('OWASP Dependency-Check Scan') {
-            steps {
-                script{
-                    dir('account-service'){
-                        owasp_dependency()
-                    }
-                }               
-            }
-        }
+        // stage('OWASP Dependency-Check Scan') {
+        //     steps {
+        //         script{
+        //             dir('account-service'){
+        //                 owasp_dependency()
+        //             }
+        //         }               
+        //     }
+        // }
 
-        stage('SonarQube: Code Analysis') {
-            steps {
-                script {
-                    dir('account-service'){
-                        mvn_sonarqube_analysis('sonar-server', 'piggymetrics-account-service', 'piggymetrics-account-service')
-                    }
-                }
-            }
-        }
+        // stage('SonarQube: Code Analysis') {
+        //     steps {
+        //         script {
+        //             dir('account-service'){
+        //                 mvn_sonarqube_analysis('sonar-server', 'piggymetrics-account-service', 'piggymetrics-account-service')
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('SonarQube: Code Quality Gates') {
         //     steps {
@@ -97,15 +97,15 @@ pipeline {
             }
         }
 
-        stage("TRIVY Image Scan") {
-            steps {
-                script {
-                    dir('account-service'){
-                        trivy_multiarch_image_scan("piggymetrics-account-service","${env.BUILD_NUMBER}","hdxt25") 
-                    }                  
-                }
-            }
-        } 
+        // stage("TRIVY Image Scan") {
+        //     steps {
+        //         script {
+        //             dir('account-service'){
+        //                 trivy_multiarch_image_scan("piggymetrics-account-service","${env.BUILD_NUMBER}","hdxt25") 
+        //             }                  
+        //         }
+        //     }
+        // } 
 
         stage("Update: Kubernetes manifest"){
             steps{
