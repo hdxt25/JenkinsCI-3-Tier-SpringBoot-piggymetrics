@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: registry
-        image: hdxt25/piggymetrics-registry:1
+        image: hdxt25/piggymetrics-registry:2
         env:
         - name: CONFIG_SERVICE_PASSWORD
           valueFrom:
