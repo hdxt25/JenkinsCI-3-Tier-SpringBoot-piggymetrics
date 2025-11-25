@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java17-debian12
+FROM eclipse-temurin:8-jre
 MAINTAINER Chi Dov <d.chiproeng@gmail.com>
 
 ADD ./target/turbine-stream-service.jar /app/

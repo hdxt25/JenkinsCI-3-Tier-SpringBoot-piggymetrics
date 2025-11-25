@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java17-debian12
+FROM eclipse-temurin:8-jre
 MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
 
 ADD ./target/auth-service.jar /app/

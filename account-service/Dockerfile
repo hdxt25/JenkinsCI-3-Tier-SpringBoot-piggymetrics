@@ -1,5 +1,4 @@
 FROM eclipse-temurin:8-jre
-#gcr.io/distroless/java17-debian12
 MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
 
 ADD ./target/account-service.jar /app/
