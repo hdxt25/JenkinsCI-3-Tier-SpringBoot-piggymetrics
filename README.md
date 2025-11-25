@@ -1,3 +1,7 @@
+![alt text](<Screenshot 2025-11-25 at 12.19.25 PM.png>) 
+![alt text](<Screenshot 2025-11-25 at 12.58.46 PM.png>)
+
+
 [![Build Status](https://travis-ci.org/sqshq/PiggyMetrics.svg?branch=master)](https://travis-ci.org/sqshq/PiggyMetrics)
 [![codecov.io](https://codecov.io/github/sqshq/PiggyMetrics/coverage.svg?branch=master)](https://codecov.io/github/sqshq/PiggyMetrics?branch=master)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/sqshq/PiggyMetrics/blob/master/LICENCE)
