@@ -44,5 +44,20 @@ spec:
         # -----------------------------
         # MongoDB Connection (Important)
         # -----------------------------
-        - na
+        - name: MONGODB_HOST
+          value: "auth-mongodb.piggymetrics.svc.cluster.local"
 
+        - name: MONGODB_PORT
+          value: "27017"
+
+        - name: MONGODB_USERNAME
+          value: "root"
+
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: piggymetrics-secrets
+              key: MONGODB_PASSWORD
+
+        ports:
+        - containerPort: 5000
