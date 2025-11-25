@@ -31,3 +31,4 @@ spec:
       - name: mongo-data
         persistentVolumeClaim:
           claimName: pvc-statistics-mongodb
+
