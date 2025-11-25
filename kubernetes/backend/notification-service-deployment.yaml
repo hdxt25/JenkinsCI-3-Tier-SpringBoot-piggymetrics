@@ -22,15 +22,27 @@ spec:
             secretKeyRef:
               name: piggymetrics-secrets
               key: CONFIG_SERVICE_PASSWORD
+
+        # ---------- MongoDB Connection ----------
+        - name: MONGODB_HOST
+          value: "notification-mongodb.piggymetrics.svc.cluster.local"
+        - name: MONGODB_PORT
+          value: "27017"
+        - name: MONGODB_USERNAME
+          value: "root"
         - name: MONGODB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: piggymetrics-secrets
               key: MONGODB_PASSWORD
+        # -----------------------------------------
+
         - name: NOTIFICATION_SERVICE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: piggymetrics-secrets
               key: NOTIFICATION_SERVICE_PASSWORD
+
         ports:
         - containerPort: 8000
+
